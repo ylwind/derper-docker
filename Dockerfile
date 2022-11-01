@@ -7,7 +7,7 @@ WORKDIR /app
 ADD tailscale /app/tailscale
 
 # build modified derper
-RUN cd /app/tailscale/
+RUN cd /app/tailscale/ tailscale
 
 RUN ls
 
