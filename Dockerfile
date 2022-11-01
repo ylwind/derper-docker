@@ -5,7 +5,7 @@ WORKDIR /app
 # ========= CONFIG =========
 # - download links
 ENV MODIFIED_DERPER_GIT=https://github.com/yangchuansheng/ip_derper.git
-ENV BRANCH=ip_derper
+ENV BRANCH=master
 # ==========================
 
 # build modified derper
