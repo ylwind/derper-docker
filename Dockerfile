@@ -7,7 +7,11 @@ WORKDIR /app
 ADD tailscale /app/tailscale
 
 # build modified derper
-RUN cd /app/tailscale/cmd/derper && \
+RUN cd /app/tailscale/
+
+RUN ls
+
+RUN cd cmd/derper && \
     /usr/local/go/bin/go build -buildvcs=false -ldflags "-s -w" -o /app/derper && \
     cd /app && \
     rm -rf /app/tailscale
