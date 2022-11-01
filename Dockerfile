@@ -2,9 +2,11 @@ FROM golang:latest AS builder
 
 WORKDIR /app
 
+RUN pwd
 # build modified derper
-RUN git clone https://github.com/ylwind/derper-docker.git && \
-    cd /app/derper-docker/tailscale/cmd/derper && \
+RUN git clone https://github.com/ylwind/tailscale.git
+RUN ls -lah
+RUN cd /app/tailscale/cmd/derper && \
     /usr/local/go/bin/go build -ldflags "-s -w" -o /app/derper && \
     cd /app && \
     rm -rf /app/tailscale
