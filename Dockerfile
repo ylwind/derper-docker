@@ -1,17 +1,14 @@
 FROM golang:latest AS builder
 
+LABEL org.opencontainers.image.source https://github.com/ylwind/derper-docker
+
 WORKDIR /app
 
-# ========= CONFIG =========
-# - download links
-ENV MODIFIED_DERPER_GIT=https://github.com/ylwind/derper-docker.git
-ENV BRANCH=master
-# ==========================
+ADD tailscale /app/tailscale
 
 # build modified derper
-RUN git clone -b $BRANCH $MODIFIED_DERPER_GIT tailscale --depth 1 && \
-    cd /app && cd tailscale/tailscale && ls && cd cmd && cd derper && \
-    /usr/local/go/bin/go build -ldflags "-s -w" -o /app/derper && \
+RUN cd /app/tailscale/cmd/derper && \
+    /usr/local/go/bin/go build -buildvcs=false -ldflags "-s -w" -o /app/derper && \
     cd /app && \
     rm -rf /app/tailscale
     
