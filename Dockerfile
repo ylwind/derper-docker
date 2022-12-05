@@ -4,8 +4,10 @@ WORKDIR /app
 
 RUN pwd
 # build modified derper
-RUN git clone https://github.com/ylwind/tailscale.git
+RUN git clone -b main https://github.com/ylwind/tailscale.git
 RUN ls -lah
+RUN go env -w GO111MODULE=on
+RUN go env -w GOPROXY=https://goproxy.cn,direct
 RUN cd /app/tailscale/cmd/derper && \
     /usr/local/go/bin/go build -ldflags "-s -w" -o /app/derper && \
     cd /app && \
@@ -14,11 +16,11 @@ RUN cd /app/tailscale/cmd/derper && \
 FROM ubuntu:20.04
 WORKDIR /app
     
-FROM ubuntu
+FROM debian
 WORKDIR /app
 
 ARG DEBIAN_FRONTEND=noninteractive
-
+RUN sed -i 's/deb.debian.org/mirrors.tencent.com/g' /etc/apt/sources.list
 RUN apt-get update && \
     apt-get install -y --no-install-recommends apt-utils && \
     apt-get install -y ca-certificates && \
